@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+// Structure for student details
+struct student {
+    char first_name[20];
+    char registration_number[15];
+    float subject1, subject2, subject3;
+    float total, average;
+};
+
+int main() {
+    int num;
+
+    // Input: Number of students
+    printf("ENTER THE NUMBER OF STUDENTS: ");
+    scanf("%d", &num);
+
+    struct student arr[num];
+
+    // Input: Student details
+    for (int i = 0; i < num; i++) {
+        printf("\nENTER DETAILS FOR STUDENT %d\n", i + 1);
+        printf("REGISTRATION NUMBER: ");
+        scanf("%s", arr[i].registration_number);
+        printf("FIRST NAME: ");
+        scanf("%s", arr[i].first_name);
+        printf("ENTER 1st SUBJECT MARKS: ");
+        scanf("%f", &arr[i].subject1);
+        printf("ENTER 2nd SUBJECT MARKS: ");
+        scanf("%f", &arr[i].subject2);
+        printf("ENTER 3rd SUBJECT MARKS: ");
+        scanf("%f", &arr[i].subject3);
+
+        // Calculate total and average
+        arr[i].total = arr[i].subject1 + arr[i].subject2 + arr[i].subject3;
+        arr[i].average = arr[i].total / 3;
+    }
+
+    // Output: Student Marks List
+    printf("\nSTUDENT MARK LIST\n");
+    printf("-------------------------------------------------------\n");
+    printf("REG NO.       NAME       TOTAL      AVERAGE     GRADE\n");
+    printf("-------------------------------------------------------\n");
+
+    for (int i = 0; i < num; i++) {
+        char grade;
+
+        // Assigning grades based on average marks
+        if (arr[i].average >= 90)
+            grade = 'S';
+        else if (arr[i].average >= 80)
+            grade = 'A';
+        else if (arr[i].average >= 70)
+            grade = 'B';
+        else if (arr[i].average >= 50)
+            grade = 'C';
+        else
+            grade = 'F';
+
+        printf("%-12s %-10s %-10.2f %-10.2f %c\n",
+               arr[i].registration_number, arr[i].first_name, arr[i].total, arr[i].average, grade);
+    }
+
+    return 0;
+}
