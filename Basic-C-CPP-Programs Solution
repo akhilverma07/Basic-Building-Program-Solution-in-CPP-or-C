@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// Function to calculate the area of a square
+void area_of_square() {
+    float side;
+    printf("\nENTER THE SIDE OF THE SQUARE: ");
+    scanf("%f", &side);
+    float square = side * side;
+    printf("THE AREA OF THE SQUARE IS: %.2f\n", square);
+}
+
+// Function to calculate the area of a rectangle
+void area_of_rectangle() {
+    float length, width;
+    printf("\nENTER THE LENGTH OF THE RECTANGLE: ");
+    scanf("%f", &length);
+    printf("ENTER THE WIDTH OF THE RECTANGLE: ");
+    scanf("%f", &width);
+    float rectangle = length * width;
+    printf("THE AREA OF THE RECTANGLE IS: %.2f\n", rectangle);
+}
+
+// Function to calculate the area of a triangle
+void area_of_triangle() {
+    float base, height;
+    printf("\nENTER THE BASE OF THE TRIANGLE: ");
+    scanf("%f", &base);
+    printf("ENTER THE HEIGHT OF THE TRIANGLE: ");
+    scanf("%f", &height);
+    float triangle = (base * height) / 2;
+    printf("THE AREA OF THE TRIANGLE IS: %.2f\n", triangle);
+}
+
+// Function to input and calculate total cost of items
+void detail(int itemid[], int quantity[], int per_item_cost[], int *total) {
+    for (int i = 0; i < 5; i++) {
+        printf("\nENTER ITEM %d ID: ", i + 1);
+        scanf("%d", &itemid[i]);
+        printf("ENTER ITEM %d QUANTITY: ", i + 1);
+        scanf("%d", &quantity[i]);
+        printf("ENTER ITEM %d COST: ", i + 1);
+        scanf("%d", &per_item_cost[i]);
+    }
+
+    printf("\nItem ID    Quantity    Per Item Cost    Total Cost\n");
+    for (int i = 0; i < 5; i++) {
+        int item_total = per_item_cost[i] * quantity[i];
+        *total += item_total;
+        printf("%d         %d           %d              %d\n", itemid[i], quantity[i], per_item_cost[i], item_total);
+    }
+    printf("THE TOTAL COST OF ALL ITEMS IS: %d\n", *total);
+}
+
+// Function to validate PAN card format
+int isvalidpan(char pan[]) {
+    if (strlen(pan) != 10) {
+        return 0;
+    }
+    for (int i = 0; i < 5; i++) {
+        if (!isupper(pan[i])) {
+            return 0;
+        }
+    }
+    for (int i = 5; i < 9; i++) {
+        if (!isdigit(pan[i])) {
+            return 0;
+        }
+    }
+    if (!isupper(pan[9])) {
+        return 0;
+    }
+    return 1;
+}
+
+// Function to input and validate a PAN card number
+void validate_pan() {
+    char pan[11];
+    printf("\nENTER THE PAN CARD NUMBER: ");
+    scanf("%s", pan);
+    if (isvalidpan(pan)) {
+        printf("VALID PAN CARD NUMBER\n");
+    } else {
+        printf("INVALID PAN CARD NUMBER\n");
+    }
+}
+
+// Employee structure
+struct employee {
+    char employee_id[10];
+    char employee_name[20];
+    int salary;
+};
+
+// Function to input and display employee with highest salary
+void employee_details() {
+    int num;
+    printf("\nHOW MANY EMPLOYEE DETAILS TO ENTER: ");
+    scanf("%d", &num);
+
+    struct employee arr[num];
+    for (int i = 0; i < num; i++) {
+        printf("\nENTER DETAILS OF EMPLOYEE %d\n", i + 1);
+        printf("EMPLOYEE ID: ");
+        scanf("%s", arr[i].employee_id);
+        printf("EMPLOYEE NAME: ");
+        scanf("%s", arr[i].employee_name);
+        printf("EMPLOYEE SALARY: ");
+        scanf("%d", &arr[i].salary);
+    }
+
+    int max_salary_index = 0;
+    for (int i = 1; i < num; i++) {
+        if (arr[i].salary > arr[max_salary_index].salary) {
+            max_salary_index = i;
+        }
+    }
+
+    printf("\nHIGHEST SALARY EMPLOYEE DETAILS:\n");
+    printf("EMPLOYEE ID    NAME          SALARY\n");
+    printf("%s            %s           RS.%d\n", arr[max_salary_index].employee_id, arr[max_salary_index].employee_name, arr[max_salary_index].salary);
+}
+
+int main() {
+    // Area calculations
+    area_of_square();
+    area_of_rectangle();
+    area_of_triangle();
+
+    // Inventory cost calculation
+    int total = 0;
+    int itemid[5], quantity[5], per_item_cost[5];
+    detail(itemid, quantity, per_item_cost, &total);
+
+    // PAN card validation
+    validate_pan();
+
+    // Employee salary details
+    employee_details();
+
+    return 0;
+}
